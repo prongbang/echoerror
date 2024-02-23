@@ -67,7 +67,7 @@ func (t *NotFound) Error() string {
 }
 
 func NewNotFound() error {
-	return &TemporaryRedirect{
+	return &NotFound{
 		Body: Body{
 			Code:    CodeNotFound,
 			Message: http.StatusText(http.StatusNotFound),
