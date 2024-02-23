@@ -5,28 +5,50 @@ import (
 	"net/http"
 )
 
+type Config struct {
+	Custom *Custom
+	I18n   *I18n
+}
+
+type I18n struct {
+	Enabled  bool
+	Localize func(c echo.Context, code string) (string, error)
+}
+
 type Custom interface {
 	Response(ctx echo.Context, err error) error
 }
 
 type Response interface {
+	With(c echo.Context) HttpResponse
+}
+
+type HttpResponse interface {
 	Response(err error) error
-	Custom(cus Custom) Response
 }
 
 type response struct {
-	Ctx echo.Context
-	Cus Custom
+	Cus  *Custom
+	I18n *I18n
 }
 
-// Custom implements Response.
-func (r *response) Custom(cus Custom) Response {
-	r.Cus = cus
-	return r
+type httpResponse struct {
+	Ctx  echo.Context
+	Cus  *Custom
+	I18n *I18n
+}
+
+// With implements Response.
+func (r *response) With(c echo.Context) HttpResponse {
+	return &httpResponse{
+		Ctx:  c,
+		Cus:  r.Cus,
+		I18n: r.I18n,
+	}
 }
 
 // Response implements Response.
-func (s *response) Response(err error) error {
+func (s *httpResponse) Response(err error) error {
 	switch e := err.(type) {
 	// Information
 	case *Continue:
@@ -35,6 +57,8 @@ func (s *response) Response(err error) error {
 		return s.Ctx.JSON(http.StatusSwitchingProtocols, e)
 	case *Processing:
 		return s.Ctx.JSON(http.StatusProcessing, e)
+	case *EarlyHints:
+		return s.Ctx.JSON(http.StatusEarlyHints, e)
 
 	// Successful
 	case *OK:
@@ -85,6 +109,8 @@ func (s *response) Response(err error) error {
 		return s.Ctx.JSON(http.StatusPaymentRequired, e)
 	case *Forbidden:
 		return s.Ctx.JSON(http.StatusForbidden, e)
+	case *NotFound:
+		return s.Ctx.JSON(http.StatusNotFound, e)
 	case *MethodNotAllowed:
 		return s.Ctx.JSON(http.StatusMethodNotAllowed, e)
 	case *NotAcceptable:
@@ -161,15 +187,27 @@ func (s *response) Response(err error) error {
 	// Other
 	default:
 		if s.Cus != nil {
-			return s.Cus.Response(s.Ctx, err)
+			if s.I18n != nil && s.I18n.Enabled && s.I18n.Localize != nil {
+				body, e1 := GetBody(err)
+				if e1 == nil && body.Code != "" && body.Message == "" {
+					if localize, e2 := s.I18n.Localize(s.Ctx, body.Code); e2 == nil {
+						SetMessage(err, localize)
+					}
+				}
+			}
+			return (*s.Cus).Response(s.Ctx, err)
 		}
 		// Default response
 		return s.Ctx.JSON(http.StatusBadRequest, NewBadRequest())
 	}
 }
 
-func New(c echo.Context) Response {
-	return &response{
-		Ctx: c,
+func New(config ...*Config) Response {
+	resp := &response{}
+	if len(config) > 0 {
+		cfg := config[0]
+		resp.Cus = cfg.Custom
+		resp.I18n = cfg.I18n
 	}
+	return resp
 }

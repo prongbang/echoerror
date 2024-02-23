@@ -18,16 +18,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func login() error {
-	return echoerror.NewUnauthorized()
-}
-
 func main() {
 	app := echo.New()
 
+	response := echoerror.New()
+	
 	app.GET("/", func(c echo.Context) error {
-		err := login()
-		return echoerror.New(c).Response(err)
+		return response.With(c).Response(echoerror.NewUnauthorized())
 	})
 
 	app.Logger.Fatal(app.Start(":1323"))
@@ -79,18 +76,16 @@ func NewCustomResponse() echoerror.Custom {
 	return &customResponse{}
 }
 
-func custom() error {
-	return NewCustomError()
-}
-
 func main() {
 	app := echo.New()
 
 	customResp := NewCustomResponse()
+	response := echoerror.New(&echoerror.Config{
+		Custom: &customResp,
+    })
 
 	app.GET("/", func(c echo.Context) error {
-		err := custom()
-		return echoerror.New(c).Custom(customResp).Response(err)
+		return response.With(c).Response(NewCustomError())
 	})
 
 	app.Logger.Fatal(app.Start(":1323"))
