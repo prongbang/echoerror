@@ -3,6 +3,7 @@ package echoerror_test
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/prongbang/echoerror"
+	"github.com/prongbang/goerror"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,7 +12,7 @@ import (
 var response = echoerror.New()
 
 type CustomError struct {
-	echoerror.Body
+	goerror.Body
 }
 
 // Error implements error.
@@ -21,7 +22,7 @@ func (c *CustomError) Error() string {
 
 func NewCustomError() error {
 	return &CustomError{
-		Body: echoerror.Body{
+		Body: goerror.Body{
 			Code: "CUS001",
 		},
 	}
@@ -71,7 +72,7 @@ func TestNewUseProxy(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUseProxy())
+		return response.With(c).Response(goerror.NewUseProxy())
 	}
 	app.GET("/test", handler)
 
@@ -90,7 +91,7 @@ func TestNewUnauthorized(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUnauthorized())
+		return response.With(c).Response(goerror.NewUnauthorized())
 	}
 	app.GET("/test", handler)
 
@@ -109,7 +110,7 @@ func TestNewTemporaryRedirect(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewTemporaryRedirect())
+		return response.With(c).Response(goerror.NewTemporaryRedirect())
 	}
 	app.GET("/test", handler)
 
@@ -128,7 +129,7 @@ func TestNewNotFound(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNotFound())
+		return response.With(c).Response(goerror.NewNotFound())
 	}
 	app.GET("/test", handler)
 
@@ -147,7 +148,7 @@ func TestNewSwitchingProtocols(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewSwitchingProtocols())
+		return response.With(c).Response(goerror.NewSwitchingProtocols())
 	}
 	app.GET("/test", handler)
 
@@ -166,7 +167,7 @@ func TestNewSeeOther(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewSeeOther())
+		return response.With(c).Response(goerror.NewSeeOther())
 	}
 	app.GET("/test", handler)
 
@@ -185,7 +186,7 @@ func TestNewResetContent(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewResetContent())
+		return response.With(c).Response(goerror.NewResetContent())
 	}
 	app.GET("/test", handler)
 
@@ -204,7 +205,7 @@ func TestNewRequestTimeout(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewRequestTimeout())
+		return response.With(c).Response(goerror.NewRequestTimeout())
 	}
 	app.GET("/test", handler)
 
@@ -223,7 +224,7 @@ func TestNewProxyAuthRequired(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewProxyAuthRequired())
+		return response.With(c).Response(goerror.NewProxyAuthRequired())
 	}
 	app.GET("/test", handler)
 
@@ -242,7 +243,7 @@ func TestNewProcessing(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewProcessing())
+		return response.With(c).Response(goerror.NewProcessing())
 	}
 	app.GET("/test", handler)
 
@@ -261,7 +262,7 @@ func TestNewPermanentRedirect(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewPermanentRedirect())
+		return response.With(c).Response(goerror.NewPermanentRedirect())
 	}
 	app.GET("/test", handler)
 
@@ -280,7 +281,7 @@ func TestNewPaymentRequired(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewPaymentRequired())
+		return response.With(c).Response(goerror.NewPaymentRequired())
 	}
 	app.GET("/test", handler)
 
@@ -299,7 +300,7 @@ func TestNewPartialContent(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewPartialContent())
+		return response.With(c).Response(goerror.NewPartialContent())
 	}
 	app.GET("/test", handler)
 
@@ -318,7 +319,7 @@ func TestNewOK(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewOK(nil))
+		return response.With(c).Response(goerror.NewOK(nil))
 	}
 	app.GET("/test", handler)
 
@@ -337,7 +338,7 @@ func TestNewNotModified(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNotModified())
+		return response.With(c).Response(goerror.NewNotModified())
 	}
 	app.GET("/test", handler)
 
@@ -356,7 +357,7 @@ func TestNewNotAcceptable(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNotAcceptable())
+		return response.With(c).Response(goerror.NewNotAcceptable())
 	}
 	app.GET("/test", handler)
 
@@ -375,7 +376,7 @@ func TestNewNonAuthoritativeInformation(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNonAuthoritativeInformation())
+		return response.With(c).Response(goerror.NewNonAuthoritativeInformation())
 	}
 	app.GET("/test", handler)
 
@@ -394,7 +395,7 @@ func TestNewNoContent(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNoContent())
+		return response.With(c).Response(goerror.NewNoContent())
 	}
 	app.GET("/test", handler)
 
@@ -413,7 +414,7 @@ func TestNewMultipleChoices(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewMultipleChoices())
+		return response.With(c).Response(goerror.NewMultipleChoices())
 	}
 	app.GET("/test", handler)
 
@@ -432,7 +433,7 @@ func TestNewMultiJSON(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewMultiStatus())
+		return response.With(c).Response(goerror.NewMultiStatus())
 	}
 	app.GET("/test", handler)
 
@@ -451,7 +452,7 @@ func TestNewMovedPermanently(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewMovedPermanently())
+		return response.With(c).Response(goerror.NewMovedPermanently())
 	}
 	app.GET("/test", handler)
 
@@ -470,7 +471,7 @@ func TestNewMethodNotAllowed(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewMethodNotAllowed())
+		return response.With(c).Response(goerror.NewMethodNotAllowed())
 	}
 	app.GET("/test", handler)
 
@@ -489,7 +490,7 @@ func TestNewIMUsed(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewIMUsed())
+		return response.With(c).Response(goerror.NewIMUsed())
 	}
 	app.GET("/test", handler)
 
@@ -508,7 +509,7 @@ func TestNewFound(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewFound())
+		return response.With(c).Response(goerror.NewFound())
 	}
 	app.GET("/test", handler)
 
@@ -527,7 +528,7 @@ func TestNewForbidden(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewForbidden())
+		return response.With(c).Response(goerror.NewForbidden())
 	}
 	app.GET("/test", handler)
 
@@ -546,7 +547,7 @@ func TestNewEarlyHints(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewEarlyHints())
+		return response.With(c).Response(goerror.NewEarlyHints())
 	}
 	app.GET("/test", handler)
 
@@ -565,7 +566,7 @@ func TestNewCreated(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewCreated(nil))
+		return response.With(c).Response(goerror.NewCreated(nil))
 	}
 	app.GET("/test", handler)
 
@@ -584,7 +585,7 @@ func TestNewContinue(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewContinue())
+		return response.With(c).Response(goerror.NewContinue())
 	}
 	app.GET("/test", handler)
 
@@ -603,7 +604,7 @@ func TestNewConflict(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewConflict())
+		return response.With(c).Response(goerror.NewConflict())
 	}
 	app.GET("/test", handler)
 
@@ -622,7 +623,7 @@ func TestNewBadRequest(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewBadRequest())
+		return response.With(c).Response(goerror.NewBadRequest())
 	}
 	app.GET("/test", handler)
 
@@ -641,7 +642,7 @@ func TestNewAlreadyReported(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewAlreadyReported())
+		return response.With(c).Response(goerror.NewAlreadyReported())
 	}
 	app.GET("/test", handler)
 
@@ -660,7 +661,7 @@ func TestNewAccepted(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewAccepted())
+		return response.With(c).Response(goerror.NewAccepted())
 	}
 	app.GET("/test", handler)
 
@@ -679,7 +680,7 @@ func TestNewGone(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewGone())
+		return response.With(c).Response(goerror.NewGone())
 	}
 	app.GET("/test", handler)
 
@@ -698,7 +699,7 @@ func TestNewLengthRequired(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewLengthRequired())
+		return response.With(c).Response(goerror.NewLengthRequired())
 	}
 	app.GET("/test", handler)
 
@@ -717,7 +718,7 @@ func TestNewPreconditionFailed(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewPreconditionFailed())
+		return response.With(c).Response(goerror.NewPreconditionFailed())
 	}
 	app.GET("/test", handler)
 
@@ -736,7 +737,7 @@ func TestNewRequestEntityTooLarge(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewRequestEntityTooLarge())
+		return response.With(c).Response(goerror.NewRequestEntityTooLarge())
 	}
 	app.GET("/test", handler)
 
@@ -755,7 +756,7 @@ func TestNewRequestURITooLong(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewRequestURITooLong())
+		return response.With(c).Response(goerror.NewRequestURITooLong())
 	}
 	app.GET("/test", handler)
 
@@ -774,7 +775,7 @@ func TestNewUnsupportedMediaType(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUnsupportedMediaType())
+		return response.With(c).Response(goerror.NewUnsupportedMediaType())
 	}
 	app.GET("/test", handler)
 
@@ -793,7 +794,7 @@ func TestNewRequestedRangeNotSatisfiable(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewRequestedRangeNotSatisfiable())
+		return response.With(c).Response(goerror.NewRequestedRangeNotSatisfiable())
 	}
 	app.GET("/test", handler)
 
@@ -812,7 +813,7 @@ func TestNewExpectationFailed(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewExpectationFailed())
+		return response.With(c).Response(goerror.NewExpectationFailed())
 	}
 	app.GET("/test", handler)
 
@@ -831,7 +832,7 @@ func TestNewTeapot(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewTeapot())
+		return response.With(c).Response(goerror.NewTeapot())
 	}
 	app.GET("/test", handler)
 
@@ -850,7 +851,7 @@ func TestNewMisdirectedRequest(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewMisdirectedRequest())
+		return response.With(c).Response(goerror.NewMisdirectedRequest())
 	}
 	app.GET("/test", handler)
 
@@ -869,7 +870,7 @@ func TestNewUnprocessableEntity(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUnprocessableEntity())
+		return response.With(c).Response(goerror.NewUnprocessableEntity())
 	}
 	app.GET("/test", handler)
 
@@ -888,7 +889,7 @@ func TestNewLocked(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewLocked())
+		return response.With(c).Response(goerror.NewLocked())
 	}
 	app.GET("/test", handler)
 
@@ -907,7 +908,7 @@ func TestNewFailedDependency(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewFailedDependency())
+		return response.With(c).Response(goerror.NewFailedDependency())
 	}
 	app.GET("/test", handler)
 
@@ -926,7 +927,7 @@ func TestNewTooEarly(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewTooEarly())
+		return response.With(c).Response(goerror.NewTooEarly())
 	}
 	app.GET("/test", handler)
 
@@ -945,7 +946,7 @@ func TestNewUpgradeRequired(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUpgradeRequired())
+		return response.With(c).Response(goerror.NewUpgradeRequired())
 	}
 	app.GET("/test", handler)
 
@@ -964,7 +965,7 @@ func TestNewPreconditionRequired(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewPreconditionRequired())
+		return response.With(c).Response(goerror.NewPreconditionRequired())
 	}
 	app.GET("/test", handler)
 
@@ -983,7 +984,7 @@ func TestNewTooManyRequests(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewTooManyRequests())
+		return response.With(c).Response(goerror.NewTooManyRequests())
 	}
 	app.GET("/test", handler)
 
@@ -1002,7 +1003,7 @@ func TestNewRequestHeaderFieldsTooLarge(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewRequestHeaderFieldsTooLarge())
+		return response.With(c).Response(goerror.NewRequestHeaderFieldsTooLarge())
 	}
 	app.GET("/test", handler)
 
@@ -1021,7 +1022,7 @@ func TestNewUnavailableForLegalReasons(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUnavailableForLegalReasons())
+		return response.With(c).Response(goerror.NewUnavailableForLegalReasons())
 	}
 	app.GET("/test", handler)
 
@@ -1040,7 +1041,7 @@ func TestNewInternalServerError(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewInternalServerError())
+		return response.With(c).Response(goerror.NewInternalServerError())
 	}
 	app.GET("/test", handler)
 
@@ -1059,7 +1060,7 @@ func TestNewNotImplemented(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNotImplemented())
+		return response.With(c).Response(goerror.NewNotImplemented())
 	}
 	app.GET("/test", handler)
 
@@ -1078,7 +1079,7 @@ func TestNewBadGateway(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewBadGateway())
+		return response.With(c).Response(goerror.NewBadGateway())
 	}
 	app.GET("/test", handler)
 
@@ -1097,7 +1098,7 @@ func TestNewServiceUnavailable(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewServiceUnavailable())
+		return response.With(c).Response(goerror.NewServiceUnavailable())
 	}
 	app.GET("/test", handler)
 
@@ -1116,7 +1117,7 @@ func TestNewGatewayTimeout(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewGatewayTimeout())
+		return response.With(c).Response(goerror.NewGatewayTimeout())
 	}
 	app.GET("/test", handler)
 
@@ -1135,7 +1136,7 @@ func TestNewHTTPVersionNotSupported(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewHTTPVersionNotSupported())
+		return response.With(c).Response(goerror.NewHTTPVersionNotSupported())
 	}
 	app.GET("/test", handler)
 
@@ -1154,7 +1155,7 @@ func TestNewVariantAlsoNegotiates(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewVariantAlsoNegotiates())
+		return response.With(c).Response(goerror.NewVariantAlsoNegotiates())
 	}
 	app.GET("/test", handler)
 
@@ -1173,7 +1174,7 @@ func TestNewInsufficientStorage(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewInsufficientStorage())
+		return response.With(c).Response(goerror.NewInsufficientStorage())
 	}
 	app.GET("/test", handler)
 
@@ -1192,7 +1193,7 @@ func TestNewLoopDetected(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewLoopDetected())
+		return response.With(c).Response(goerror.NewLoopDetected())
 	}
 	app.GET("/test", handler)
 
@@ -1211,7 +1212,7 @@ func TestNewNotExtended(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNotExtended())
+		return response.With(c).Response(goerror.NewNotExtended())
 	}
 	app.GET("/test", handler)
 
@@ -1230,7 +1231,7 @@ func TestNewNetworkAuthenticationRequired(t *testing.T) {
 	app := echo.New()
 
 	handler := func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewNetworkAuthenticationRequired())
+		return response.With(c).Response(goerror.NewNetworkAuthenticationRequired())
 	}
 	app.GET("/test", handler)
 

@@ -14,6 +14,7 @@ go get github.com/prongbang/echoerror
 package main
 
 import (
+	"github.com/prongbang/goerror"
 	"github.com/prongbang/echoerror"
 	"github.com/labstack/echo/v4"
 )
@@ -24,7 +25,7 @@ func main() {
 	response := echoerror.New()
 	
 	app.GET("/", func(c echo.Context) error {
-		return response.With(c).Response(echoerror.NewUnauthorized())
+		return response.With(c).Response(goerror.NewUnauthorized())
 	})
 
 	app.Logger.Fatal(app.Start(":1323"))
@@ -38,12 +39,13 @@ package main
 
 import (
 	"http"
+	"github.com/prongbang/goerror"
 	"github.com/prongbang/echoerror"
 	"github.com/labstack/echo/v4"
 )
 
 type CustomError struct {
-	echoerror.Body
+	goerror.Body
 }
 
 // Error implements error.
@@ -53,7 +55,7 @@ func (c *CustomError) Error() string {
 
 func NewCustomError() error {
 	return &CustomError{
-		Body: echoerror.Body{
+		Body: goerror.Body{
 			Code:    "CUS001",
 			Message: "Custom 001",
 		},
